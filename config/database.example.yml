@@ -1,0 +1,15 @@
+common: &common
+  adapter:  postgresql
+  host:     localhost
+  encoding: unicode
+  pool:     100
+  username: postgresql
+  password: postgresql
+
+development:
+  <<: *common
+  database: tshtask_development
+
+test:
+  <<: *common
+  database: tshtask_test
