@@ -14,7 +14,9 @@ gem 'haml-rails'
 gem 'pg'
 gem 'simple_form'
 gem 'sidekiq'
-gem "therubyracer", platforms: :ruby
+gem 'therubyracer', platforms: :ruby
+gem 'activerecord-import'
+gem 'debugger'
 
 group :development do
   gem 'better_errors'
@@ -27,6 +29,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'puma'
   gem 'rspec-rails'
+  gem 'hirb'
 end
 group :production do
   gem 'unicorn'
@@ -35,4 +38,6 @@ group :test do
   gem 'capybara'
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
+  gem 'shoulda-matchers', '~> 2.7.0', require: false
+  gem 'timecop'
 end
