@@ -25,7 +25,11 @@ class Exchange < ActiveRecord::Base
     open("http://nbp.pl/kursy/xml/dir.txt").read
   end
 
+  def xml_regexp
+    /c([0-9]+)z#{Date.today.strftime "%y%m%d"}/
+  end
+
   def xml_name
-    xml_list.lines.select{ |l| l.match(/c([0-9]+)z#{Date.today.strftime "%y%m%d"}/) }.first[0..-3] rescue nil
+    @xml_name ||= xml_list.lines.select{ |l| l.match(xml_regexp) }.first[0..-3] rescue nil
   end
 end
