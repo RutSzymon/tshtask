@@ -1,19 +1,20 @@
 class MoneyController < ApplicationController
+  rescue_from OpenURI::HTTPError, with: :rescue_message
 
   def index
-    #show list of exchange rates with creation time
-    #don't forget about pagination
+    @exchanges = Exchange.all.page(params[:page])
   end
 
   def show
-    #show table of currencies for selected exchange rate
+    @currencies = exchange.currencies
   end
 
   def refresh_rates
-    #for manual refreshing
-    #get latest exchange rates and save to db
-    #can be helpful: 
-    #http://www.nbp.pl/home.aspx?f=/kursy/instrukcja_pobierania_kursow_walut.html
+    if Exchange.for_today.exists? then flash[:notice] = "Rates are already up to date"
+    elsif Exchange.new.save_current_rates then flash[:notice] = "Rates have been updated successfully"
+    else flash[:alert] = "Something went wrong"
+    end
+    redirect_to money_index_path
   end
 
   def report
@@ -21,8 +22,16 @@ class MoneyController < ApplicationController
     #report should show: basic statistics: mean, median, average
     #also You can generate a simple chart(use can use some js library)
 
-    #this method should be available only for currencies which exist in the database 
+    #this method should be available only for currencies which exist in the database
   end
 
+  private
+  def exchange
+    @exchange ||= Exchange.find(params[:id])
+  end
 
+  def rescue_message
+    flash[:alert] = "Rates for today are not available"
+    redirect_to money_index_path
+  end
 end
