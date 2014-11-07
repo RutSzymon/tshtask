@@ -15,8 +15,8 @@ gem 'pg'
 gem 'simple_form'
 gem 'sidekiq'
 gem 'therubyracer', platforms: :ruby
-gem 'activerecord-import'
 gem 'debugger'
+gem 'kaminari', '~> 0.14.1'
 
 group :development do
   gem 'better_errors'
