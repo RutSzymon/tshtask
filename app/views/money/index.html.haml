@@ -1,0 +1,22 @@
+= paginate @exchanges
+
+.exchanges
+  %h3= "Exchanges"
+  .pull-right
+    = link_to refresh_rates_money_index_path, method: :post, class: "btn has-tip", title: "Refresh" do
+      %span.glyphicon.glyphicon-refresh
+
+  .exchanges.list
+    %table.table.table-striped
+      %thead
+        %th.span2= "ID"
+        %th.span5= "Name"
+        %th.span5= "Created at"
+      %tbody
+        - @exchanges.each do |exchange|
+          %tr
+            %td= exchange.id
+            %td= link_to exchange.name, money_path(exchange)
+            %td= exchange.created_at
+
+= paginate @exchanges
