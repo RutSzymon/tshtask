@@ -7,17 +7,18 @@ class Exchange < ActiveRecord::Base
 
   before_validation { self.name = xml_name }
 
+  scope :for_today, -> { where(created_at: (Date.today.beginning_of_day..Date.today.end_of_day)) }
+
   def get_nbp_xml
     @get_nbp_xml ||= open("http://www.nbp.pl/kursy/xml/#{xml_name}.xml").read
   end
 
   def save_current_rates
-    self.save
-    rates = Hash.from_xml(get_nbp_xml)["tabela_kursow"]["pozycja"].map do |rate|
-      Currency.new(name: rate["nazwa_waluty"], converter: rate["przelicznik"], code: rate["kod_waluty"],
-        buy_price: rate["kurs_kupna"], sell_price: rate["kurs_sprzedazy"], exchange: self)
+    Hash.from_xml(get_nbp_xml)["tabela_kursow"]["pozycja"].map do |rate|
+      currencies.new(name: rate["nazwa_waluty"], converter: rate["przelicznik"], code: rate["kod_waluty"],
+        buy_price: rate["kurs_kupna"], sell_price: rate["kurs_sprzedazy"])
     end
-    Currency.import rates
+    self.save
   end
 
   private

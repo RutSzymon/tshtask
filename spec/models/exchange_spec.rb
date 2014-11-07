@@ -46,6 +46,25 @@ describe Exchange do
     end
   end
 
+  describe "via scopes" do
+    context ".for_today" do
+      it "should return exchanges for today" do
+        Timecop.freeze(Date.today.beginning_of_week + 10.hours) do
+          @yesterday_exchange = FactoryGirl.create(:exchange)
+        end
+        Timecop.freeze(Date.today.beginning_of_week + 1.day + 10.hours) do
+          @today_exchange = FactoryGirl.create(:exchange)
+          Exchange.for_today.should include(@today_exchange)
+          Exchange.for_today.should_not include(@yesterday_exchange)
+        end
+        Timecop.freeze(Date.today.beginning_of_week + 10.hours) do
+          Exchange.for_today.should include(@yesterday_exchange)
+          Exchange.for_today.should_not include(@today_exchange)
+        end
+      end
+    end
+  end
+
   describe "via instance methods" do
     before(:each) do
       @exchange = FactoryGirl.build(:exchange)
