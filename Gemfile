@@ -18,6 +18,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'debugger'
 gem 'kaminari', '~> 0.14.1'
 gem 'gon'
+gem 'whenever'
 
 group :development do
   gem 'better_errors'
