@@ -15,7 +15,6 @@ gem 'pg'
 gem 'simple_form'
 gem 'sidekiq'
 gem 'therubyracer', platforms: :ruby
-gem 'debugger'
 gem 'kaminari', '~> 0.14.1'
 gem 'gon'
 gem 'whenever'
@@ -31,6 +30,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'puma'
   gem 'rspec-rails'
+  gem 'debugger'
   gem 'hirb'
   gem 'timecop'
 end
