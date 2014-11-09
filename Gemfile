@@ -17,6 +17,7 @@ gem 'sidekiq'
 gem 'therubyracer', platforms: :ruby
 gem 'debugger'
 gem 'kaminari', '~> 0.14.1'
+gem 'gon'
 
 group :development do
   gem 'better_errors'
@@ -30,6 +31,7 @@ group :development, :test do
   gem 'puma'
   gem 'rspec-rails'
   gem 'hirb'
+  gem 'timecop'
 end
 group :production do
   gem 'unicorn'
@@ -39,5 +41,4 @@ group :test do
   gem 'database_cleaner', '1.0.1'
   gem 'email_spec'
   gem 'shoulda-matchers', '~> 2.7.0', require: false
-  gem 'timecop'
 end
