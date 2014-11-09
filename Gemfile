@@ -18,6 +18,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'kaminari', '~> 0.14.1'
 gem 'gon'
 gem 'whenever'
+gem 'thin', '~> 1.5.1'
 
 group :development do
   gem 'better_errors'
