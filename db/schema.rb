@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140217103509) do
+ActiveRecord::Schema.define(version: 20141108210545) do
 
   create_table "currencies", force: true do |t|
     t.string  "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20140217103509) do
     t.float   "buy_price"
     t.float   "sell_price"
     t.integer "exchange_id"
+    t.date    "date"
   end
 
   add_index "currencies", ["exchange_id"], name: "index_currencies_on_exchange_id", using: :btree
