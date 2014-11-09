@@ -1,0 +1,21 @@
+.money
+  %h3= breadcrumbs
+
+  .money.window
+    %fieldset
+      %legend= "Currencies"
+      %table.table.table-striped
+        %thead
+          %th.span4= "Name"
+          %th.span2= "Converter"
+          %th.span2= "Code"
+          %th.span2= "Buy price"
+          %th.span2= "Sell price"
+        %tbody
+          - @currencies.each do |currency|
+            %tr
+              %td= link_to currency.name, report_money_path(currency)
+              %td= currency.converter
+              %td= currency.code
+              %td= to_currency currency.buy_price
+              %td= to_currency currency.sell_price

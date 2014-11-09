@@ -1,0 +1,26 @@
+.money
+  %h3= breadcrumbs
+
+  .money.window
+    #chart
+
+    %p
+      %table.table
+        %tr
+          %th.span4= "Buy price"
+          %td.span4= to_currency @currency.buy_price
+        %tr
+          %th.span4= "Sell price"
+          %td.span4= to_currency @currency.sell_price
+        %tr
+          %th.span4= "Mean price"
+          %td.span4= to_currency @currency.mean_price
+        %tr
+          %th.span4= "Median"
+          %td.span4= to_currency @median
+        %tr
+          %th.span4= "Average of buy price"
+          %td.span4= to_currency @buy_average
+        %tr
+          %th.span4= "Average of sell price"
+          %td.span4= to_currency @sell_average
