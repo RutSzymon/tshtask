@@ -1,3 +1,5 @@
+require "open-uri"
+
 class MoneyController < ApplicationController
   rescue_from OpenURI::HTTPError, with: :rescue_message
 
