@@ -9,12 +9,16 @@ describe Exchange do
 
   describe "via validations" do
     before(:each) do
+      Timecop.freeze(Date.today.beginning_of_week + 10.hours)
       @exchange = FactoryGirl.build(:exchange)
     end
+
+    after(:each){ Timecop.return }
 
     it { @exchange.should be_valid }
 
     it "should validate presence of name" do
+      Timecop.return
       Timecop.freeze(Date.tomorrow) do
         @exchange.should_not be_valid
         @exchange.errors.messages.should eq({ name: ["can't be blank"] })
@@ -31,8 +35,8 @@ describe Exchange do
 
   describe "via callbacks" do
     before(:each) do
-      @exchange = FactoryGirl.build(:exchange)
       Timecop.freeze(Date.today.beginning_of_week + 10.hours)
+      @exchange = FactoryGirl.build(:exchange)
     end
 
     after(:each){ Timecop.return }
@@ -67,8 +71,8 @@ describe Exchange do
 
   describe "via instance methods" do
     before(:each) do
-      @exchange = FactoryGirl.build(:exchange)
       Timecop.freeze(Date.today.beginning_of_week + 10.hours)
+      @exchange = FactoryGirl.build(:exchange)
     end
 
     after(:each){ Timecop.return }

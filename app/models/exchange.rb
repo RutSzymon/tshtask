@@ -1,13 +1,17 @@
 require "open-uri"
 
 class Exchange < ActiveRecord::Base
-  has_many :currencies, dependent: :destroy
+  has_many :currencies, -> { order(:id) }, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
 
   before_validation { self.name = xml_name }
 
   scope :for_today, -> { where(created_at: (Date.today.beginning_of_day..Date.today.end_of_day)) }
+
+  def to_s
+    name
+  end
 
   def get_nbp_xml
     @get_nbp_xml ||= open("http://www.nbp.pl/kursy/xml/#{xml_name}.xml").read
@@ -16,7 +20,8 @@ class Exchange < ActiveRecord::Base
   def save_current_rates
     Hash.from_xml(get_nbp_xml)["tabela_kursow"]["pozycja"].map do |rate|
       currencies.new(name: rate["nazwa_waluty"], converter: rate["przelicznik"], code: rate["kod_waluty"],
-        buy_price: rate["kurs_kupna"], sell_price: rate["kurs_sprzedazy"])
+        buy_price: rate["kurs_kupna"].gsub(",", "."), sell_price: rate["kurs_sprzedazy"].gsub(",", "."),
+        date: Date.today)
     end
     self.save
   end
