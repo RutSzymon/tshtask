@@ -4,5 +4,6 @@ Tshtask::Application.routes.draw do
   resources :users, except: [:show, :index]
   resources :money, except: [:delete, :edit, :update, :create, :new] do
     post :refresh_rates, on: :collection
+    get :report, on: :member
   end
 end

@@ -2,7 +2,7 @@ class MoneyController < ApplicationController
   rescue_from OpenURI::HTTPError, with: :rescue_message
 
   def index
-    @exchanges = Exchange.all.page(params[:page])
+    @exchanges = Exchange.order("id desc").page(params[:page])
   end
 
   def show
@@ -18,16 +18,25 @@ class MoneyController < ApplicationController
   end
 
   def report
-    #generate a report for selected currency
-    #report should show: basic statistics: mean, median, average
-    #also You can generate a simple chart(use can use some js library)
-
-    #this method should be available only for currencies which exist in the database
+    @exchange = currency.exchange
+    @median = Currency.median(currency.code)
+    @buy_average, @sell_average = currency_rates.average(:buy_price), currency_rates.average(:sell_price)
+    gon.currency_rates = Currency.chart_data(currency.code)
+    gon.min_value = currency_rates.pluck(:buy_price).min.round(2) - 0.01
+    gon.max_value = currency_rates.pluck(:sell_price).max.round(2) + 0.01
   end
 
   private
   def exchange
     @exchange ||= Exchange.find(params[:id])
+  end
+
+  def currency
+    @currency ||= Currency.find(params[:id])
+  end
+
+  def currency_rates
+    @currency_rates ||= Currency.by_code(currency.code)
   end
 
   def rescue_message
