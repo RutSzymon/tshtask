@@ -1,12 +1,12 @@
-= paginate @exchanges
-
-.exchanges
-  %h3= "Exchanges"
+.money
+  %h3= breadcrumbs
   .pull-right
     = link_to refresh_rates_money_index_path, method: :post, class: "btn has-tip", title: "Refresh" do
       %span.glyphicon.glyphicon-refresh
 
-  .exchanges.list
+  .money.window
+    = paginate @exchanges
+
     %table.table.table-striped
       %thead
         %th.span2= "ID"
@@ -17,6 +17,6 @@
           %tr
             %td= exchange.id
             %td= link_to exchange.name, money_path(exchange)
-            %td= exchange.created_at
+            %td= localize exchange.created_at, format: :long
 
-= paginate @exchanges
+    = paginate @exchanges
