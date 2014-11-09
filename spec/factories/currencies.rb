@@ -1,5 +1,3 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
-
 FactoryGirl.define do
   factory :currency do
     name "MyString"
@@ -7,6 +5,6 @@ FactoryGirl.define do
     code "MyString"
     buy_price 1.5
     sell_price 1.5
-    exchange nil
+    exchange factory: :exchange
   end
 end
